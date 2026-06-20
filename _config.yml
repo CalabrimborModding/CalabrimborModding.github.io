@@ -1,0 +1,34 @@
+# --- Site Settings ---
+title: Calabrimbor Modding
+description: High-performance Minecraft modding, custom server infrastructure, and technical tools.
+remote_theme: pages-themes/cayman@v0.2.0 # Clean, modern theme that fits dark aesthetics well
+
+# --- URL Settings ---
+# If your repo is named 'yourusername.github.io', leave baseurl as ""
+# If your repo is a sub-folder like 'yourusername.github.io/modpack-site', change it to "/modpack-site"
+baseurl: "" 
+url: "https://CalabrimborModding.github.io"
+
+# --- Content Settings ---
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+
+# --- Social Links & Sidebar Info ---
+author:
+  name: Calabrimbor
+  twitter: "" # Add your handle if you have one
+  github: CalabrimborModding
+
+# --- Build Settings ---
+# Tells Jekyll to ignore these files and folders during the build process
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .jekyll-cache/
+  - .jekyll-metadata
