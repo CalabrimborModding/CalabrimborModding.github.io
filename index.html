@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calabrimbor Modding | Development Portfolio</title>
+    <style>
+        :root {
+            --bg-dark: #070d12;
+            --bg-card: #0d1b24;
+            --mithril-glow: #00d2ff;
+            --mithril-dim: #005c73;
+            --gold: #ffb300;
+            --text-main: #e2f1f5;
+            --text-dim: #8ba3ad;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: var(--mithril-glow);
+            font-weight: 600;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .lead-text {
+            max-width: 650px;
+            margin: 20px auto 0 auto;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--mithril-dim);
+            color: var(--text-dim);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            border-color: var(--mithril-glow);
+            color: #ffffff;
+            background: rgba(0, 210, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--gold);
+            padding-left: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(0, 210, 255, 0.08);
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 77, 97, 0.3);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: rgba(255, 179, 0, 0.1);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 179, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+            padding-right: 90px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .specs-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .specs-list li {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .specs-list li::before {
+            content: '✦';
+            color: var(--mithril-glow);
+            font-size: 0.75rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--mithril-glow);
+            color: var(--bg-dark);
+            box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #ffffff;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            border-color: #ffffff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .about-strip {
+            background: linear-gradient(90deg, var(--bg-card) 0%, rgba(13,27,36,0.4) 100%);
+            border-left: 4px solid var(--mithril-glow);
+            border-radius: 0 12px 12px 0;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .about-strip p {
+            color: var(--text-dim);
+            margin-bottom: 15px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-main);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(252,252,252,0.2);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <svg width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
+                <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
+                <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+            </svg>
+        </div>
+        <h1>Calabrimbor Modding</h1>
+        <p class="subtitle">Gameplay Mechanics & Automation Engineering</p>
+        <p class="lead-text">Developing open-source content, gameplay loops, and intricate automation logic. Specialized in clean software design and non-monetized community software engineering.</p>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProjects('all')">All Development</button>
+            <button class="filter-btn" onclick="filterProjects('minecraft')">Minecraft (Java)</button>
+            <button class="filter-btn" onclick="filterProjects('sandbox')">Other Sandboxes</button>
+        </div>
+    </header>
+
+    <main>
+        <h2 class="section-title">Active Projects</h2>
+        
+        <div class="grid">
+            <!-- Project 1 -->
+            <div class="card" data-category="minecraft">
+                <span class="card-tag">NeoForge / 1.21.1</span>
+                <div>
+                    <h3>Minehaven Core Integration</h3>
+                    <p>A technical modding environment focused tightly on structural progression and industrial mechanical design. Completely free of monetization or premium features.</p>
+                    <ul class="specs-list">
+                        <li>Advanced kinetic automation routing via the Create Mod</li>
+                        <li>Bespoke data-driven world distribution using Terralith layers</li>
+                        <li>Granular gameplay utility structures handled cleanly in Java</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a href="https://github.com/yourusername" class="btn btn-primary">View on GitHub</a>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="card" data-category="minecraft">
+                <span class="card-tag">Java Mechanics</span>
+                <div>
+                    <h3>Modular Compatibility Adapters</h3>
+                    <p>Custom software hooks designed to bridge modern mod loaders, solving complex initialization bottlenecks and fixing event-handling discrepancies between large mod integrations.</p>
+                    <ul class="specs-list">
+                        <li>Optimized event listeners minimizing client ticking overhead</li>
+                        <li>Custom configuration loaders parsing mod data structures efficiently</li>
+                        <li>Open-source utility code compiled for modern modular mod environments</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a href="https://github.com/yourusername" class="btn btn-secondary">Browse Source</a>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="card" data-category="sandbox">
+                <span class="card-tag">C# / Lua Scripting</span>
+                <div>
+                    <h3>Cross-Engine Simulation Components</h3>
+                    <p>Architecting custom behaviors, programmable block routines, and mechanic adjustments for various rigid-body sandbox engineering titles.</p>
+                    <ul class="specs-list">
+                        <li>Object-oriented grid automation with Space Engineers Mod SDK (C#)</li>
+                        <li>Bespoke networking scripts and tool modifications using Lua</li>
+                        <li>Environmental asset compiling utilizing the Hammer++ framework</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a href="https://github.com/yourusername" class="btn btn-secondary">Explore Repos</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">The Developer</h2>
+        <div class="about-strip">
+            <p>Hey there, I'm Callum. I look at video game worlds through the lens of mechanical automation and clean code architecture. Writing mod components requires balancing runtime speed with complex game rules, and I construct everything across optimized hardware environments using both Apple Silicon and high-performance desktop architectures.</p>
+            <p>When I'm not writing code or analyzing mod performance profiles, I follow industrial systems layout design, watch international football tournaments, and support the Scottish national team.</p>
+            <div class="tech-tags">
+                <span class="tech-badge">Java</span>
+                <span class="tech-badge">C#</span>
+                <span class="tech-badge">Lua</span>
+                <span class="tech-badge">NeoForge / Forge</span>
+                <span class="tech-badge">Space Engineers SDK</span>
+                <span class="tech-badge">Git Version Control</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Calabrimbor Modding • Designed for Clean Gameplay & Engineering
+    </footer>
+
+    <script>
+        function filterProjects(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                    card.style.opacity = '0';
+                    setTimeout(() => card.style.opacity = '1', 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
