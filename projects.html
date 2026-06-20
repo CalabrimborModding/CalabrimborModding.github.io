@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge & NeoForge Projects | Calabrimbor Modding</title>
+    <meta name="description" content="Explore Calabrimbor Modding's active Minecraft projects, framework adapters, and NeoForge automation mod roadmaps.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Dynamic Mesh Background Glows -->
+    <div class="bg-glow-container">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo" id="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+                </svg>
+                <span>CALABRIMBOR</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+                <li><a href="projects.html" class="nav-link active" id="nav-projects">Projects</a></li>
+                <li><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
+                <li><a href="about.html" class="nav-link" id="nav-about">About Me</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <h1>Forge & <span>NeoForge</span> Mods</h1>
+        <p class="subtitle">Smithing Virtual Mechanics</p>
+        <p class="lead-text">
+            A comprehensive look at planned systems, mechanical libraries, and optimizations under active conceptualization.
+        </p>
+    </header>
+
+    <main class="container">
+        <!-- Interactive Controls (Search & Filter) -->
+        <div class="controls-container" id="controls">
+            <!-- Search Bar Wrapper -->
+            <div class="search-wrapper">
+                <div class="search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <input type="text" id="search-bar" class="search-input" placeholder="Search mods, features, loader versions..." oninput="updateFilters()">
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" id="filter-all" onclick="setCategory('all')">All Categories</button>
+                <button class="filter-btn" id="filter-gameplay" onclick="setCategory('gameplay')">Gameplay Elements</button>
+                <button class="filter-btn" id="filter-framework" onclick="setCategory('framework')">Core Technical</button>
+            </div>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="grid" id="project-grid">
+            <!-- Project 1: Create: Culinary Overhaul -->
+            <div class="card" data-category="gameplay" id="card-culinary-overhaul">
+                <span class="card-tag blueprint">Active Development</span>
+                <div>
+                    <h3>Create: Culinary Overhaul</h3>
+                    <p>Expands the farming and food mechanics of the Create Mod on NeoForge 1.21.1. It replaces standard 3x3 inventory crafting with physical processing lines powered by kinetic energy, fluid networks, and moving contraptions.</p>
+                    <ul class="specs-list">
+                        <li>Minecraft Version: 1.21.1</li>
+                        <li>Mod Loader: NeoForge (Create v0.6+ Stack)</li>
+                        <li>Core Mechanics: Refinement pipelines & fluid logistics</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a href="https://github.com/CalabrimborModding/create-culinary-overhaul" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-culinary-repo">View Repository</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Visual Element -->
+        <div class="no-results" id="no-results-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 15px auto;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M16 16l6 6"></path>
+                <path d="M8 11h6"></path>
+            </svg>
+            <h3>No Matching Projects Found</h3>
+            <p>Try refining your search keyword or selecting a different category filter.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Calabrimbor Modding • Built with Passion & Code
+    </footer>
+
+    <!-- Filter & Search Logic -->
+    <script>
+        let currentCategory = 'all';
+
+        function setCategory(category) {
+            currentCategory = category;
+            
+            // Toggle active class on buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(`filter-${category}`).classList.add('active');
+            updateFilters();
+        }
+
+        function updateFilters() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const specs = Array.from(card.querySelectorAll('.specs-list li'))
+                                   .map(li => li.textContent.toLowerCase())
+                                   .join(' ');
+                
+                const categoryMatch = currentCategory === 'all' || card.getAttribute('data-category') === currentCategory;
+                const searchMatch = !query || title.includes(query) || description.includes(query) || specs.includes(query);
+
+                if (categoryMatch && searchMatch) {
+                    card.style.display = 'flex';
+                    // Small delay for fade transition
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(10px)';
+                    
+                    // Simple requestAnimationFrame to trigger layout then animation
+                    requestAnimationFrame(() => {
+                        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    });
+
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle empty results state
+            const noResults = document.getElementById('no-results-state');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                // Trigger quick fade in
+                noResults.style.opacity = '0';
+                requestAnimationFrame(() => {
+                    noResults.style.transition = 'opacity 0.2s ease';
+                    noResults.style.opacity = '1';
+                });
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

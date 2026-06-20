@@ -3,399 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calabrimbor Modding | The Modding Journey</title>
-    <style>
-        :root {
-            --bg-dark: #070d12;
-            --bg-card: #0d1b24;
-            --mithril-glow: #00d2ff;
-            --mithril-dim: #005c73;
-            --gold: #ffb300;
-            --text-main: #e2f1f5;
-            --text-dim: #8ba3ad;
-            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        header {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 20px 40px 20px;
-            text-align: center;
-        }
-
-        .logo-container {
-            margin-bottom: 20px;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            color: var(--mithril-glow);
-            font-weight: 600;
-            letter-spacing: 4px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        .lead-text {
-            max-width: 650px;
-            margin: 20px auto 0 auto;
-            color: var(--text-dim);
-            font-size: 1.1rem;
-        }
-
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--mithril-dim);
-            color: var(--text-dim);
-            padding: 8px 18px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            border-color: var(--mithril-glow);
-            color: #ffffff;
-            background: rgba(0, 210, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-        }
-
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px 60px 20px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            border-left: 4px solid var(--gold);
-            padding-left: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid rgba(0, 210, 255, 0.08);
-            border-radius: 12px;
-            padding: 30px;
-            position: relative;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 210, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 77, 97, 0.3);
-        }
-
-        /* Status & Placeholder specific badges */
-        .card-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            background: rgba(255, 179, 0, 0.1);
-            color: var(--gold);
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 179, 0, 0.2);
-        }
-
-        .card-tag.blueprint {
-            background: rgba(0, 210, 255, 0.1);
-            color: var(--mithril-glow);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-        }
-
-        .card h3 {
-            font-size: 1.35rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-            padding-right: 90px;
-        }
-
-        .card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .specs-list {
-            list-style: none;
-            margin-bottom: 25px;
-        }
-
-        .specs-list li {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .specs-list li::before {
-            content: '✦';
-            color: var(--mithril-glow);
-            font-size: 0.75rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background: var(--mithril-glow);
-            color: var(--bg-dark);
-            box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #ffffff;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: var(--text-main);
-        }
-
-        .btn-secondary:hover {
-            border-color: #ffffff;
-            background: rgba(255,255,255,0.05);
-        }
-
-        .btn:disabled, .btn.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .about-strip {
-            background: linear-gradient(90deg, var(--bg-card) 0%, rgba(13,27,36,0.4) 100%);
-            border-left: 4px solid var(--mithril-glow);
-            border-radius: 0 12px 12px 0;
-            padding: 35px;
-            margin-top: 20px;
-        }
-
-        .about-strip p {
-            color: var(--text-dim);
-            margin-bottom: 15px;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .tech-badge {
-            font-size: 0.75rem;
-            background: rgba(255,255,255,0.04);
-            color: var(--text-main);
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(252,252,252,0.2);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-    </style>
+    <title>Calabrimbor Modding | Minecraft Java Development</title>
+    <meta name="description" content="Welcome to the Minecraft Java modding development hub of Callum (Calabrimbor). Explore NeoForge concepts, performance-driven mods, and tech tinkering.">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header>
+    <!-- Dynamic Mesh Background Glows -->
+    <div class="bg-glow-container">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo" id="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+                </svg>
+                <span>CALABRIMBOR</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active" id="nav-home">Home</a></li>
+                <li><a href="projects.html" class="nav-link" id="nav-projects">Projects</a></li>
+                <li><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
+                <li><a href="about.html" class="nav-link" id="nav-about">About Me</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Hero -->
+    <header class="hero">
         <div class="logo-container">
-            <svg width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="80" height="80" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
                 <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
                 <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
             </svg>
         </div>
-        <h1>Calabrimbor Modding</h1>
-        <p class="subtitle">The Minecraft Java Development Journey</p>
-        <p class="lead-text">Documenting my path through Java code architecture, mechanical algorithm design, and custom game modifications. Driven by an entirely unmonetized, community-first engineering mindset.</p>
-        
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterProjects('all')">All Progress</button>
-            <button class="filter-btn" onclick="filterProjects('gameplay')">Gameplay Elements</button>
-            <button class="filter-btn" onclick="filterProjects('framework')">Core Technical</button>
-        </div>
+        <h1>Calabrimbor <span>Modding</span></h1>
+        <p class="subtitle">Forging Minecraft Java Experiences</p>
+        <p class="lead-text">
+            Exploring mechanical systems, automation loops, and high-efficiency algorithms in Java. Driven by an open-source, community-first engineering mindset.
+        </p>
     </header>
 
-    <main>
-        <h2 class="section-title">Development Roadmap & Concepts</h2>
-        
-        <div class="grid">
-            <!-- Project 1: Kinetic Mod Placeholder -->
-            <div class="card" data-category="gameplay">
-                <span class="card-tag blueprint">In Planning</span>
+    <main class="container">
+        <p class="hub-intro">
+            Welcome to my development workspace. This site is split into separate hubs detailing my active Minecraft modding endeavors and my personal engineering background. Select an area below to dive in.
+        </p>
+
+        <!-- Hub Showcase Split -->
+        <div class="hub-showcase">
+            <!-- Projects Hub Card -->
+            <div class="card hub-card" id="card-projects-hub">
                 <div>
-                    <h3>Project Kinetic Core (Placeholder)</h3>
-                    <p>An intended NeoForge addition heavily exploring enhanced automation loops, rotational data processing, and physical expansion blocks to tie together fluid mechanical ecosystems.</p>
+                    <div class="hub-card-title">
+                        <div class="hub-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Mods & Projects</h3>
+                    </div>
+                    <p>
+                        Take a look at the mods I'm building and planning. I'm focusing on creating clean, performance-friendly NeoForge mods that add cool automation systems, kinetic machinery, and run smoothly in large modpacks.
+                    </p>
                     <ul class="specs-list">
-                        <li>Target Loader: NeoForge / 1.21.1+</li>
-                        <li>Planned Core Focus: Kinetic integration & expansion mechanics</li>
-                        <li>Development Goal: Smooth client ticking and modular component logic</li>
+                        <li>Active Target: NeoForge 1.21.1+</li>
+                        <li>Themes: Kinetic machinery, automation, and compatibility</li>
+                        <li>Open-Source: Free and collaborative code</li>
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <a href="#" class="btn btn-secondary disabled">Repo Pending</a>
+                    <a href="projects.html" class="btn btn-primary" id="btn-view-projects">Explore Projects</a>
                 </div>
             </div>
 
-            <!-- Project 2: Compatibility Layer Placeholder -->
-            <div class="card" data-category="framework">
-                <span class="card-tag blueprint">In Concept</span>
+            <!-- About Me Hub Card -->
+            <div class="card hub-card purple-themed" id="card-about-hub">
                 <div>
-                    <h3>Modular Adapter API (Placeholder)</h3>
-                    <p>A planned backend utility structure designed to bridge events cleanly between expansive content packs, minimizing initialization overhead and optimizing client loop profiles.</p>
-                    <ul class="specs-list">
-                        <li>Target Architecture: Advanced event listeners & injection maps</li>
-                        <li>Optimization Goal: Resolving conflict profiles within heavy setups</li>
-                        <li>Philosophy: Entirely open-source, flexible framework base</li>
+                    <div class="hub-card-title">
+                        <div class="hub-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>About Callum</h3>
+                    </div>
+                    <p>
+                        I'm a 24-year-old developer based in Scotland. When I'm not tracing Java crash logs or optimizing Minecraft chunk tickers, I explore other areas of tech, study system designs, and follow football. Get a deeper look at my story and background.
+                    </p>
+                    <ul class="specs-list purple">
+                        <li>Location: Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</li>
+                        <li>Background: 24 Years Old with Tourette's</li>
+                        <li>Interests: Tech tinkering & hardware setups</li>
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <a href="#" class="btn btn-secondary disabled">Repo Pending</a>
+                    <a href="about.html" class="btn btn-purple" id="btn-view-about">Read Biography</a>
                 </div>
             </div>
         </div>
 
-        <h2 class="section-title">The Dev Journal</h2>
-        <div class="about-strip">
-            <p>Hey there, I'm Callum. My path through game software focuses deeply on understanding how virtual environments handle logic, automation loops, and raw execution speeds. I study Minecraft's Java environment as a space for performance engineering—aiming to build tools that maximize structural efficiency while keeping gameplay interactions complex and engaging.</p>
-            <p>I organize my development using a dual system consisting of an Apple Silicon mobile environment and a heavy local desktop rig. When I'm not tracing mod behaviors, reading crash files, or mapping out code bases, I spend my time examining industrial system designs, following international football tournaments, and supporting the Scottish national team.</p>
+        <!-- Tech Ribbon Section -->
+        <div class="tech-ribbon-section">
+            <h3 class="section-title blue">Tech Stack & Tinkering Toolkit</h3>
             <div class="tech-tags">
-                <span class="tech-badge">Java (Target)</span>
-                <span class="tech-badge">NeoForge Ecosystem</span>
-                <span class="tech-badge">C# Experience</span>
-                <span class="tech-badge">Lua Scripting</span>
-                <span class="tech-badge">Git Version Control</span>
+                <span class="tech-badge">Java</span>
+                <span class="tech-badge">NeoForge</span>
+                <span class="tech-badge">Git & Version Control</span>
+                <span class="tech-badge">Apple Silicon Environment</span>
+                <span class="tech-badge">Automation</span>
+                <span class="tech-badge">Linux</span>
             </div>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer>
-        &copy; 2026 Calabrimbor Modding • Documenting the Evolution of Code
+        &copy; 2026 Calabrimbor Modding • Built with Passion & Code
     </footer>
 
-    <script>
-        function filterProjects(category) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'flex';
-                    card.style.opacity = '0';
-                    setTimeout(() => card.style.opacity = '1', 50);
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
 </body>
 </html>
