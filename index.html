@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calabrimbor Modding | Development Portfolio</title>
+    <title>Calabrimbor Modding | The Modding Journey</title>
     <style>
         :root {
             --bg-dark: #070d12;
@@ -151,6 +151,7 @@
             box-shadow: 0 10px 30px rgba(0, 77, 97, 0.3);
         }
 
+        /* Status & Placeholder specific badges */
         .card-tag {
             position: absolute;
             top: 20px;
@@ -164,6 +165,12 @@
             padding: 4px 10px;
             border-radius: 4px;
             border: 1px solid rgba(255, 179, 0, 0.2);
+        }
+
+        .card-tag.blueprint {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--mithril-glow);
+            border: 1px solid rgba(0, 210, 255, 0.2);
         }
 
         .card h3 {
@@ -243,6 +250,12 @@
             background: rgba(255,255,255,0.05);
         }
 
+        .btn:disabled, .btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .about-strip {
             background: linear-gradient(90deg, var(--bg-card) 0%, rgba(13,27,36,0.4) 100%);
             border-left: 4px solid var(--mithril-glow);
@@ -299,89 +312,71 @@
             </svg>
         </div>
         <h1>Calabrimbor Modding</h1>
-        <p class="subtitle">Gameplay Mechanics & Automation Engineering</p>
-        <p class="lead-text">Developing open-source content, gameplay loops, and intricate automation logic. Specialized in clean software design and non-monetized community software engineering.</p>
+        <p class="subtitle">The Minecraft Java Development Journey</p>
+        <p class="lead-text">Documenting my path through Java code architecture, mechanical algorithm design, and custom game modifications. Driven by an entirely unmonetized, community-first engineering mindset.</p>
         
         <div class="filter-container">
-            <button class="filter-btn active" onclick="filterProjects('all')">All Development</button>
-            <button class="filter-btn" onclick="filterProjects('minecraft')">Minecraft (Java)</button>
-            <button class="filter-btn" onclick="filterProjects('sandbox')">Other Sandboxes</button>
+            <button class="filter-btn active" onclick="filterProjects('all')">All Progress</button>
+            <button class="filter-btn" onclick="filterProjects('gameplay')">Gameplay Elements</button>
+            <button class="filter-btn" onclick="filterProjects('framework')">Core Technical</button>
         </div>
     </header>
 
     <main>
-        <h2 class="section-title">Active Projects</h2>
+        <h2 class="section-title">Development Roadmap & Concepts</h2>
         
         <div class="grid">
-            <!-- Project 1 -->
-            <div class="card" data-category="minecraft">
-                <span class="card-tag">NeoForge / 1.21.1</span>
+            <!-- Project 1: Kinetic Mod Placeholder -->
+            <div class="card" data-category="gameplay">
+                <span class="card-tag blueprint">In Planning</span>
                 <div>
-                    <h3>Minehaven Core Integration</h3>
-                    <p>A technical modding environment focused tightly on structural progression and industrial mechanical design. Completely free of monetization or premium features.</p>
+                    <h3>Project Kinetic Core (Placeholder)</h3>
+                    <p>An intended NeoForge addition heavily exploring enhanced automation loops, rotational data processing, and physical expansion blocks to tie together fluid mechanical ecosystems.</p>
                     <ul class="specs-list">
-                        <li>Advanced kinetic automation routing via the Create Mod</li>
-                        <li>Bespoke data-driven world distribution using Terralith layers</li>
-                        <li>Granular gameplay utility structures handled cleanly in Java</li>
+                        <li>Target Loader: NeoForge / 1.21.1+</li>
+                        <li>Planned Core Focus: Kinetic integration & expansion mechanics</li>
+                        <li>Development Goal: Smooth client ticking and modular component logic</li>
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <a href="https://github.com/yourusername" class="btn btn-primary">View on GitHub</a>
+                    <a href="#" class="btn btn-secondary disabled">Repo Pending</a>
                 </div>
             </div>
 
-            <!-- Project 2 -->
-            <div class="card" data-category="minecraft">
-                <span class="card-tag">Java Mechanics</span>
+            <!-- Project 2: Compatibility Layer Placeholder -->
+            <div class="card" data-category="framework">
+                <span class="card-tag blueprint">In Concept</span>
                 <div>
-                    <h3>Modular Compatibility Adapters</h3>
-                    <p>Custom software hooks designed to bridge modern mod loaders, solving complex initialization bottlenecks and fixing event-handling discrepancies between large mod integrations.</p>
+                    <h3>Modular Adapter API (Placeholder)</h3>
+                    <p>A planned backend utility structure designed to bridge events cleanly between expansive content packs, minimizing initialization overhead and optimizing client loop profiles.</p>
                     <ul class="specs-list">
-                        <li>Optimized event listeners minimizing client ticking overhead</li>
-                        <li>Custom configuration loaders parsing mod data structures efficiently</li>
-                        <li>Open-source utility code compiled for modern modular mod environments</li>
+                        <li>Target Architecture: Advanced event listeners & injection maps</li>
+                        <li>Optimization Goal: Resolving conflict profiles within heavy setups</li>
+                        <li>Philosophy: Entirely open-source, flexible framework base</li>
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <a href="https://github.com/yourusername" class="btn btn-secondary">Browse Source</a>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="card" data-category="sandbox">
-                <span class="card-tag">C# / Lua Scripting</span>
-                <div>
-                    <h3>Cross-Engine Simulation Components</h3>
-                    <p>Architecting custom behaviors, programmable block routines, and mechanic adjustments for various rigid-body sandbox engineering titles.</p>
-                    <ul class="specs-list">
-                        <li>Object-oriented grid automation with Space Engineers Mod SDK (C#)</li>
-                        <li>Bespoke networking scripts and tool modifications using Lua</li>
-                        <li>Environmental asset compiling utilizing the Hammer++ framework</li>
-                    </ul>
-                </div>
-                <div class="btn-group">
-                    <a href="https://github.com/yourusername" class="btn btn-secondary">Explore Repos</a>
+                    <a href="#" class="btn btn-secondary disabled">Repo Pending</a>
                 </div>
             </div>
         </div>
 
-        <h2 class="section-title">The Developer</h2>
+        <h2 class="section-title">The Dev Journal</h2>
         <div class="about-strip">
-            <p>Hey there, I'm Callum. I look at video game worlds through the lens of mechanical automation and clean code architecture. Writing mod components requires balancing runtime speed with complex game rules, and I construct everything across optimized hardware environments using both Apple Silicon and high-performance desktop architectures.</p>
-            <p>When I'm not writing code or analyzing mod performance profiles, I follow industrial systems layout design, watch international football tournaments, and support the Scottish national team.</p>
+            <p>Hey there, I'm Callum. My path through game software focuses deeply on understanding how virtual environments handle logic, automation loops, and raw execution speeds. I study Minecraft's Java environment as a space for performance engineering—aiming to build tools that maximize structural efficiency while keeping gameplay interactions complex and engaging.</p>
+            <p>I organize my development using a dual system consisting of an Apple Silicon mobile environment and a heavy local desktop rig. When I'm not tracing mod behaviors, reading crash files, or mapping out code bases, I spend my time examining industrial system designs, following international football tournaments, and supporting the Scottish national team.</p>
             <div class="tech-tags">
-                <span class="tech-badge">Java</span>
-                <span class="tech-badge">C#</span>
-                <span class="tech-badge">Lua</span>
-                <span class="tech-badge">NeoForge / Forge</span>
-                <span class="tech-badge">Space Engineers SDK</span>
+                <span class="tech-badge">Java (Target)</span>
+                <span class="tech-badge">NeoForge Ecosystem</span>
+                <span class="tech-badge">C# Experience</span>
+                <span class="tech-badge">Lua Scripting</span>
                 <span class="tech-badge">Git Version Control</span>
             </div>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 Calabrimbor Modding • Designed for Clean Gameplay & Engineering
+        &copy; 2026 Calabrimbor Modding • Documenting the Evolution of Code
     </footer>
 
     <script>
