@@ -257,13 +257,23 @@ h1 span {
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     h1 {
-        font-size: 2.3rem;
+        font-size: 2.2rem;
     }
     .navbar-container {
         flex-direction: column;
         gap: 15px;
+        text-align: center;
+    }
+    .nav-links {
+        justify-content: center;
+        width: 100%;
+        padding-left: 0;
+    }
+    .hero {
+        margin: 40px auto 30px auto;
     }
 }
 
@@ -542,6 +552,11 @@ h1 span {
 @media (max-width: 850px) {
     .about-grid {
         grid-template-columns: 1fr;
+    }
+    .profile-card {
+        position: relative;
+        top: auto;
+        margin-bottom: 20px;
     }
 }
 
@@ -1024,5 +1039,72 @@ footer a:hover {
 /* Prevent scrolling of background body when modal is active */
 body.modal-open {
     overflow: hidden;
+}
+
+/* Mobile Fine-Tuning (480px and below) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.85rem;
+    }
+    .subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+    }
+    .lead-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    .container {
+        padding: 0 12px 40px 12px;
+    }
+    .section-title {
+        font-size: 1.3rem;
+        margin: 30px 0 15px 0;
+    }
+    .card {
+        padding: 22px;
+    }
+    .card h3 {
+        font-size: 1.22rem;
+    }
+    .hub-card-title h3 {
+        font-size: 1.35rem;
+    }
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        gap: 15px;
+    }
+    .search-wrapper {
+        width: 100%;
+    }
+    .filter-buttons {
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    .filter-btn {
+        flex: 1;
+        text-align: center;
+        padding: 6px 10px;
+        font-size: 0.76rem;
+    }
+    .modal-window {
+        padding: 24px;
+        max-height: 90vh;
+    }
+    .modal-post-title {
+        font-size: 1.45rem;
+    }
+    .modal-close-btn {
+        top: 15px;
+        right: 15px;
+        width: 32px;
+        height: 32px;
+    }
+    .tinker-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
