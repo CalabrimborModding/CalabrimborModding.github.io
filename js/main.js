@@ -315,9 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------
     // 4. INTERACTIVE FLOATING TERMINAL WIDGET
     // -----------------------------------------------------------------
-    // Inject floating button and console wrapper
-    const toggleBtnHtml = `<button class="terminal-toggle-btn" id="terminal-toggle-btn" title="Open Developer Console">&gt;_</button>`;
-    
+    // Inject console wrapper card only (removed floating button from bottom right)
     const terminalCardHtml = `
     <div class="terminal-widget-card" id="terminal-widget" style="cursor: text;">
         <div class="terminal-header">
@@ -331,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="terminal-widget-body" id="terminal-widget-body">
             <div class="terminal-log" id="terminal-widget-log">
-                <div>Welcome to Calabrimbor's developer console. Type <span style="color: var(--primary); font-weight: bold;">help</span> to inspect system setup and options.</div>
+                <div>Welcome to Calabrimbor's developer console. Press <kbd style="background: var(--bg-card); padding: 2px 5px; border-radius: 3px; font-family: var(--font-mono); border: 1px solid var(--border-color);">\`</kbd> (backtick) to toggle this console. Type <span style="color: var(--primary); font-weight: bold;">help</span> for aliases.</div>
             </div>
             <div class="terminal-input-wrapper">
                 <span class="terminal-prompt-prefix">calabrimbor@macbook ~ %</span>
@@ -341,45 +339,49 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
-    // Append to body dynamically
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = toggleBtnHtml + terminalCardHtml;
-    document.body.appendChild(tempDiv.firstElementChild); // Append toggle button
-    document.body.appendChild(tempDiv.lastElementChild);  // Append card widget
+    tempDiv.innerHTML = terminalCardHtml;
+    document.body.appendChild(tempDiv.firstElementChild);
 
-    // Element references
     const termInput = document.getElementById('terminal-widget-input');
     const termLog = document.getElementById('terminal-widget-log');
     const termBody = document.getElementById('terminal-widget-body');
     const termWidget = document.getElementById('terminal-widget');
-    const termToggleBtn = document.getElementById('terminal-toggle-btn');
     const closeDot = document.getElementById('terminal-widget-close-dot');
     const closeBtn = document.getElementById('terminal-widget-close-btn');
 
     function toggleConsole() {
-        termWidget.classList.toggle('active');
-        termToggleBtn.classList.toggle('active');
-        if (termWidget.classList.contains('active')) {
+        if (!termWidget) return;
+        const isActive = termWidget.classList.toggle('active');
+        if (isActive && termInput) {
             setTimeout(() => {
                 termInput.focus();
             }, 50);
         }
     }
 
-    if (termToggleBtn && termWidget && termInput) {
-        // Toggle on button click
-        termToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
+    // Toggle Console on Backtick (`) keypress
+    document.addEventListener('keydown', (e) => {
+        // Toggle on backtick (`), unless typing in the chat field or key configuration inputs
+        const activeEl = document.activeElement;
+        const typingInInput = activeEl && (
+            activeEl.tagName === 'INPUT' || 
+            activeEl.tagName === 'TEXTAREA' || 
+            activeEl.tagName === 'SELECT'
+        );
+        if (e.key === '`' && !typingInInput) {
+            e.preventDefault();
             toggleConsole();
-        });
+        }
+    });
 
+    if (termWidget && termInput) {
         // Close on header controls click
         [closeDot, closeBtn].forEach(el => {
             if (el) {
                 el.addEventListener('click', (e) => {
                     e.stopPropagation();
                     termWidget.classList.remove('active');
-                    termToggleBtn.classList.remove('active');
                 });
             }
         });
@@ -394,16 +396,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && termWidget.classList.contains('active')) {
                 termWidget.classList.remove('active');
-                termToggleBtn.classList.remove('active');
             }
         });
 
         // Close on clicking outside container
         document.addEventListener('click', (e) => {
             if (termWidget.classList.contains('active')) {
-                if (!termWidget.contains(e.target) && !termToggleBtn.contains(e.target)) {
+                if (!termWidget.contains(e.target)) {
                     termWidget.classList.remove('active');
-                    termToggleBtn.classList.remove('active');
                 }
             }
         });

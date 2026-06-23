@@ -1418,42 +1418,7 @@ footer {
     caret-color: var(--primary);
 }
 
-/* Floating Terminal Toggle Button */
-.terminal-toggle-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    color: var(--primary);
-    font-family: var(--font-mono);
-    font-weight: bold;
-    font-size: 1.25rem;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 210, 255, 0.1);
-    transition: var(--transition-blueprint);
-    outline: none;
-}
 
-.terminal-toggle-btn:hover {
-    border-color: var(--border-hover);
-    color: #fff;
-    transform: scale(1.08) rotate(-5deg);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--primary);
-}
-
-.terminal-toggle-btn.active {
-    background: var(--primary);
-    color: var(--bg-dark);
-    border-color: #fff;
-}
 
 @media (max-width: 480px) {
     .terminal-widget-card {
@@ -1467,13 +1432,7 @@ footer {
     .terminal-widget-card.active {
         transform: translate(-50%, -50%) scale(1);
     }
-    .terminal-toggle-btn {
-        bottom: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
-    }
+
 }
 
 /* Custom theme overrides for text elements if needed */
@@ -1839,7 +1798,7 @@ input:checked + .admin-slider:before {
 .chat-widget-btn {
     position: fixed;
     bottom: 20px;
-    right: 85px;
+    right: 20px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -2136,7 +2095,7 @@ input:checked + .admin-slider:before {
         transform: translate(-50%, -50%) scale(1);
     }
     .chat-widget-btn {
-        right: 75px;
+        right: 15px;
     }
 }
 
