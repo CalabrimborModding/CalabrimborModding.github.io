@@ -649,6 +649,15 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
                 <label style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--primary);">GEMINI_API_KEY</label>
                 <input type="password" id="chat-gemini-key-input" class="chat-input-field" placeholder="Enter Gemini key (AI Studio)..." style="width: 100%;">
             </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--primary);">SELECT_MODEL</label>
+                <select id="chat-gemini-model-select" style="background: var(--bg-terminal); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 12px; font-family: var(--font-mono); font-size: 0.8rem; border-radius: var(--border-radius-sm); outline: none; width: 100%;">
+                    <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                    <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                    <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                    <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                </select>
+            </div>
             <div style="display: flex; gap: 10px; margin-top: 5px;">
                 <button id="chat-settings-save" class="chat-send-btn" style="flex: 1;">Save Key</button>
                 <button id="chat-settings-clear" class="chat-send-btn" style="border-color: var(--accent-gold); color: var(--accent-gold);">Clear</button>
@@ -687,6 +696,7 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
     const settingsToggle = document.getElementById('chat-settings-toggle');
     const settingsPane = document.getElementById('chat-settings-pane');
     const keyInput = document.getElementById('chat-gemini-key-input');
+    const modelSelect = document.getElementById('chat-gemini-model-select');
     const saveBtn = document.getElementById('chat-settings-save');
     const clearBtn = document.getElementById('chat-settings-clear');
 
@@ -700,8 +710,44 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
         console.error(e);
     }
 
-    // Load key from storage
-    keyInput.value = localStorage.getItem('calabrimbor-gemini-key') || '';
+    // Load configurations from storage
+    const savedKey = localStorage.getItem('calabrimbor-gemini-key') || '';
+    keyInput.value = savedKey;
+    if (savedKey) {
+        populateModelsDropdown(savedKey);
+    }
+
+    async function populateModelsDropdown(key) {
+        if (!modelSelect || !key) return;
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1/models?key=${key}`);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.models && data.models.length > 0) {
+                    const validModels = data.models.filter(m => 
+                        m.supportedGenerationMethods && 
+                        m.supportedGenerationMethods.includes('generateContent')
+                    );
+                    if (validModels.length > 0) {
+                        modelSelect.innerHTML = '';
+                        validModels.forEach(m => {
+                            const name = m.name.replace('models/', '');
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            modelSelect.appendChild(option);
+                        });
+                        const current = localStorage.getItem('calabrimbor-gemini-model');
+                        if (current) {
+                            modelSelect.value = current;
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('Error listing models:', e);
+        }
+    }
 
     // Toggle Settings panel
     settingsToggle.addEventListener('click', (e) => {
@@ -713,6 +759,11 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
             chatFooter.style.display = 'none';
             settingsToggle.textContent = '💬';
             settingsToggle.title = 'Back to Chat';
+            // Pre-populate if key exists
+            const key = keyInput.value.trim();
+            if (key) {
+                populateModelsDropdown(key);
+            }
         } else {
             settingsPane.style.display = 'none';
             chatBody.style.display = 'flex';
@@ -724,13 +775,53 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
         }
     });
 
-    saveBtn.addEventListener('click', (e) => {
+    saveBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const key = keyInput.value.trim();
         if (key) {
-            localStorage.setItem('calabrimbor-gemini-key', key);
-            alert('Google Gemini API Key successfully saved! The AI is now configured to answer any question.');
-            settingsToggle.click(); // Toggle back
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Verifying...';
+            try {
+                // Verify key and list models
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models?key=${key}`);
+                if (!response.ok) {
+                    throw new Error(`Verification request returned status ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.models && data.models.length > 0) {
+                    const validModels = data.models.filter(m => 
+                        m.supportedGenerationMethods && 
+                        m.supportedGenerationMethods.includes('generateContent')
+                    );
+                    if (validModels.length > 0) {
+                        modelSelect.innerHTML = '';
+                        validModels.forEach(m => {
+                            const name = m.name.replace('models/', '');
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            modelSelect.appendChild(option);
+                        });
+                        
+                        localStorage.setItem('calabrimbor-gemini-key', key);
+                        const selectedModel = modelSelect.value || 'gemini-1.5-flash';
+                        localStorage.setItem('calabrimbor-gemini-model', selectedModel);
+                        
+                        alert(`Gemini key verified successfully! Found ${validModels.length} compatible models.`);
+                        settingsToggle.click(); // Toggle back
+                    } else {
+                        alert('Verified API key, but no text generation models are enabled for it.');
+                    }
+                } else {
+                    alert('API key verification failed: no models returned.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert(`Verification failed: ${err.message}. Please verify your API key.`);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Key';
+            }
         } else {
             alert('Please enter a key, or click Clear.');
         }
@@ -739,8 +830,16 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
     clearBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         localStorage.removeItem('calabrimbor-gemini-key');
+        localStorage.removeItem('calabrimbor-gemini-model');
         keyInput.value = '';
-        alert('Gemini key removed. The chatbot is back in local offline simulator mode.');
+        modelSelect.innerHTML = `
+            <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+        `;
+        modelSelect.value = 'gemini-1.5-flash';
+        alert('Gemini configurations cleared. Reverting to local offline simulator mode.');
         settingsToggle.click(); // Toggle back
     });
 
@@ -865,7 +964,7 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
                 console.error(err);
                 const indicator = document.getElementById('chat-typing-indicator');
                 if (indicator) indicator.remove();
-                sendBotResponse(`Error: Failed to request Gemini API. Please verify your API Key in settings (⚙️). <br><br><strong>Fallback reply:</strong> ${matchResponse(msgText)}`);
+                sendBotResponse(`Error: ${err.message}. Please verify your API Key in settings (⚙️). <br><br><strong>Fallback reply:</strong> ${matchResponse(msgText)}`);
             }
         } else {
             // Generate response after mock delay
@@ -880,7 +979,9 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
     }
 
     async function queryGemini(userQuery, key) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+        const model = localStorage.getItem('calabrimbor-gemini-model') || 'gemini-1.5-flash';
+        // Use stable v1 endpoint since it is widely supported across all regions (e.g. EU) for Gemini 1.5/2.0
+        const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${key}`;
         
         const rawContents = [];
         // Map history excluding the very last message (which is the current userQuery already saved)
@@ -914,12 +1015,18 @@ Keycode: 1337 (Access authentication key)`, 'system-output');
             }
         });
 
-        const systemPrompt = `You are "Calabrimbor AI", a virtual assistant avatar for Callum's developer portfolio. 
-Callum is a 24-year-old developer from Scotland who builds Minecraft Java mods using NeoForge 1.21. 
-He has Tourette's Syndrome and writes code as a way to calm his motor cortex (tics suppression). 
-Be helpful, smart, technical, and match the retro blueprint/terminal aesthetic of the website. 
-Keep responses concise (under 2-3 paragraphs). You can suggest visiting projects.html, contact.html, about.html, or tourettes-awareness.html where appropriate. 
-If asked about unrelated general topics or questions, answer them normally and accurately, but maintain Callum's helpful technical assistant tone.`;
+        // Ensure the contents array starts with a 'user' role as strictly required by Gemini API
+        while (contents.length > 0 && contents[0].role !== 'user') {
+            contents.shift();
+        }
+
+        // We use Prompt Prepending for roleplay system instructions. 
+        // This is 100% compatible with the stable v1 API version in all regions.
+        const systemPrompt = `You are "Calabrimbor AI", a virtual assistant avatar for Callum's developer portfolio. Callum is a 24-year-old developer from Scotland who builds Minecraft Java mods using NeoForge 1.21. He has Tourette's Syndrome and writes code as a way to calm his motor cortex (tics suppression). Be helpful, smart, technical, and match the retro blueprint/terminal aesthetic of the website. Keep responses concise (under 2-3 paragraphs). You can suggest visiting projects.html, contact.html, about.html, or tourettes-awareness.html where appropriate. If asked about unrelated general topics or questions, answer them normally and accurately, but maintain Callum's helpful technical assistant tone.`;
+
+        if (contents.length > 0 && contents[0].role === 'user') {
+            contents[0].parts[0].text = `[System Instructions: ${systemPrompt}]\n\nUser Question: ${contents[0].parts[0].text}`;
+        }
 
         const response = await fetch(url, {
             method: 'POST',
@@ -927,15 +1034,19 @@ If asked about unrelated general topics or questions, answer them normally and a
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                contents: contents,
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                }
+                contents: contents
             })
         });
 
         if (!response.ok) {
-            throw new Error(`Gemini API Error: ${response.status} ${response.statusText}`);
+            let errMsg = response.statusText || "";
+            try {
+                const errData = await response.json();
+                if (errData.error && errData.error.message) {
+                    errMsg = errData.error.message;
+                }
+            } catch (e) {}
+            throw new Error(`Gemini API Error: ${response.status} - ${errMsg}`);
         }
 
         const data = await response.json();
