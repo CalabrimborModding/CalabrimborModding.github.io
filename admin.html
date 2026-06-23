@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Calabrimbor</title>
+    <meta name="description" content="Administrative control console for the Calabrimbor mod development workspace.">
+    <link rel="canonical" href="https://calabrimbormodding.github.io/admin.html">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Auth Shield Overlay -->
+    <div class="admin-auth-overlay" id="auth-overlay">
+        <div class="admin-auth-card">
+            <div class="admin-auth-title">calabrimbor@macbook: ~/workspace/admin</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4;">
+                CRITICAL ACCESS BLOCK: HOST VERIFICATION REQUIRED.<br>
+                PLEASE PROVIDE THE SENDER AUTHENTICATION KEY.
+            </div>
+            <form onsubmit="handleAuthSubmit(event)">
+                <input type="password" class="admin-auth-input" id="auth-passcode" required placeholder="Enter keycode..." autocomplete="off" autofocus>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="auth-error-msg" style="color: var(--accent-gold); font-size: 0.8rem; display: none;">ACCESS DENIED</span>
+                    <button type="submit" class="btn btn-primary" style="font-family: var(--font-mono); font-size: 0.8rem; padding: 6px 16px; cursor: pointer;">Authenticate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo" id="nav-logo">
+                <svg class="standard-logo" width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="var(--primary)"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="var(--primary)"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="var(--accent-gold)"/>
+                </svg>
+                <svg class="awareness-logo-ribbon" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8.5 8.7 10.2 10 11.5L6 21C5.7 21.7 6.2 22 6.5 22C6.8 22 7.2 21.8 7.4 21.5L12 14.5L16.6 21.5C16.8 21.8 17.2 22 17.5 22C17.8 22 18.3 21.7 18 21L14 11.5C15.3 10.2 16.5 8.5 16.5 6.5C16.5 4 14.5 2 12 2ZM12 4C13.4 4 14.5 5.1 14.5 6.5C14.5 7.7 13.7 8.9 12.8 9.8C12.3 10.3 11.7 10.3 11.2 9.8C10.3 8.9 9.5 7.7 9.5 6.5C9.5 5.1 10.6 4 12 4Z"/>
+                </svg>
+                <span>CALABRIMBOR</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+                <li><a href="projects.html" class="nav-link" id="nav-projects">Projects</a></li>
+                <li><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
+                <li><a href="about.html" class="nav-link" id="nav-about">About Me</a></li>
+                <li><a href="tourettes-awareness.html" class="nav-link" id="nav-awareness">Awareness</a></li>
+                <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+                <li><a href="admin.html" class="nav-link active" id="nav-admin">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <h1>Workspace <span>Control Panel</span></h1>
+        <p class="subtitle">Administrative Shell Console</p>
+    </header>
+
+    <main class="container">
+        <!-- Blueprint Title Block -->
+        <div class="title-block">
+            <div class="title-block-item">
+                <span class="title-block-label">Project</span>
+                <span class="title-block-value">Workspace Shell</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Designer</span>
+                <span class="title-block-value">Callum (Scotland)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Drawing No</span>
+                <span class="title-block-value">CB-07 (Admin)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Revision No</span>
+                <span class="title-block-value">CB-1.0</span>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-bottom: 40px;">
+            <!-- Diagnostics Panel -->
+            <div class="card">
+                <div>
+                    <span class="card-tag tag-blue">DIAG-01</span>
+                    <h3 class="card-title purple">System Telemetry</h3>
+                    <p class="card-text" style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.8; margin-top: 15px;">
+                        Host: MacOS (Apple Silicon)<br>
+                        Shell: zsh (Local Node Active)<br>
+                        Java VM State: Running (JDK 21)<br>
+                        Custom Posts Cache: <span id="custom-posts-count" style="color: var(--primary); font-weight: bold;">0</span> items<br>
+                        Awareness Month State: <span id="telemetry-awareness-status" style="font-weight: bold;">STANDBY</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Awareness Month Override Switch -->
+            <div class="card">
+                <div>
+                    <span class="card-tag tag-blue">SYS-02</span>
+                    <h3 class="card-title blue">Awareness Mode Override</h3>
+                    <p class="card-text" style="margin-bottom: 20px;">
+                        Force Tourette's Syndrome Awareness Theme (Teal/Turquoise palette) and global announcement top banner output on all calendar days.
+                    </p>
+                    <div class="admin-toggle-wrapper">
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-main);">FORCE AWARENESS GLOBAL</span>
+                        <label class="admin-switch">
+                            <input type="checkbox" id="awareness-override-chk" onchange="toggleAwarenessOverride(this)">
+                            <span class="admin-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compilation Console Card -->
+        <h2 class="section-title blue">Java / NeoForge Compiler Simulator</h2>
+        <div class="card" style="margin-bottom: 40px; padding: 25px;">
+            <p style="margin-bottom: 15px;">Run a simulation of compiling Minecraft Java resources using NeoForge loader gradle tasks.</p>
+            <button class="btn btn-secondary" onclick="simulateCompilation()" id="btn-run-compile" style="font-family: var(--font-mono); font-size: 0.85rem; padding: 8px 16px; margin-bottom: 20px;">Run Gradle Compilation Tasks &gt;</button>
+            <div style="background: var(--bg-terminal); color: var(--primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 15px; font-family: var(--font-mono); font-size: 0.8rem; min-height: 120px; line-height: 1.6; overflow-y: auto;" id="compile-console-log">
+                <div>calabrimbor@macbook: ~/workspace/modding % _</div>
+            </div>
+        </div>
+
+        <!-- Blog Post Creator Form -->
+        <h2 class="section-title purple">Draft & Publish Transmission</h2>
+        <div class="card" style="margin-bottom: 40px; padding: 30px;">
+            <form id="composer-form" onsubmit="handlePostPublish(event)" style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="form-grid">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label class="contact-label" for="composer-title">[POST.TITLE]</label>
+                        <input type="text" id="composer-title" class="contact-input" required placeholder="Enter post heading title...">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label class="contact-label" for="composer-category">[POST.CATEGORY]</label>
+                        <div class="theme-select-wrapper" style="width: 100%;">
+                            <select id="composer-category" class="contact-select">
+                                <option value="Updates">Updates</option>
+                                <option value="Modding">Modding Projects</option>
+                                <option value="Tinkering">Tinkering / Code</option>
+                                <option value="Awareness">Awareness</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label class="contact-label" for="composer-summary">[POST.SUMMARY]</label>
+                        <input type="text" id="composer-summary" class="contact-input" required placeholder="Draft a brief one-line synopsis...">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label class="contact-label" for="composer-read-time">[POST.READ_TIME]</label>
+                        <input type="text" id="composer-read-time" class="contact-input" required placeholder="Example: 3 min read...">
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label class="contact-label" for="composer-content">[POST.CONTENT_BODY_HTML]</label>
+                    <textarea id="composer-content" class="contact-textarea" rows="8" required placeholder="Enter article content paragraphs in HTML. Example: &lt;p&gt;My paragraphs...&lt;/p&gt;"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="submit" class="btn btn-primary" style="font-family: var(--font-mono); font-size: 0.9rem; padding: 10px 24px; cursor: pointer;">Publish Transmission &gt;</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Custom Published Posts List -->
+        <h2 class="section-title gold">Custom Articles Registry</h2>
+        <div class="card" style="margin-bottom: 40px; padding: 20px;">
+            <p>Below is a directory register of all dynamic posts stored in your local browser storage registry database.</p>
+            <div class="admin-table-wrapper">
+                <table class="admin-data-table">
+                    <thead>
+                        <tr>
+                            <th>ID / Date</th>
+                            <th>Title Header</th>
+                            <th>Category</th>
+                            <th>Read Time</th>
+                            <th style="text-align: center;">Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody id="custom-posts-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted);">NO CUSTOM POSTS LOCATED IN DATABASE REGISTRY.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Calabrimbor • Built with Passion & Code
+    </footer>
+
+    <script>
+        // Authentication Guard
+        document.addEventListener('DOMContentLoaded', () => {
+            const authState = sessionStorage.getItem('calabrimbor-admin-auth');
+            if (authState === 'true') {
+                document.getElementById('auth-overlay').style.display = 'none';
+            }
+
+            // Sync awareness override checkbox
+            const forceState = localStorage.getItem('calabrimbor-force-awareness') === 'true';
+            document.getElementById('awareness-override-chk').checked = forceState;
+            updateTelemetryStatus(forceState);
+
+            // Render custom articles registry table
+            renderCustomPostsTable();
+        });
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const passcode = document.getElementById('auth-passcode').value;
+            const errorMsg = document.getElementById('auth-error-msg');
+            
+            if (passcode === '1337') {
+                sessionStorage.setItem('calabrimbor-admin-auth', 'true');
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else {
+                errorMsg.style.display = 'inline';
+                document.getElementById('auth-passcode').value = '';
+                document.getElementById('auth-passcode').focus();
+            }
+        }
+
+        // Toggle Awareness Global Override
+        function toggleAwarenessOverride(chk) {
+            const isChecked = chk.checked;
+            localStorage.setItem('calabrimbor-force-awareness', isChecked ? 'true' : 'false');
+            updateTelemetryStatus(isChecked);
+            
+            // Reload page to apply stylesheet theme instantly
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+        }
+
+        function updateTelemetryStatus(isActive) {
+            const statusSpan = document.getElementById('telemetry-awareness-status');
+            if (statusSpan) {
+                if (isActive) {
+                    statusSpan.textContent = "FORCE ACTIVE";
+                    statusSpan.style.color = "#10b981";
+                } else {
+                    statusSpan.textContent = "STANDBY";
+                    statusSpan.style.color = "";
+                }
+            }
+        }
+
+        // Simulating Compilation
+        function simulateCompilation() {
+            const logBox = document.getElementById('compile-console-log');
+            const btn = document.getElementById('btn-run-compile');
+            btn.disabled = true;
+            btn.textContent = "Compiling resources...";
+            
+            logBox.innerHTML = '<div>calabrimbor@macbook: ~/workspace/modding % ./gradlew build</div>';
+
+            const lines = [
+                "&gt; Preparing build configuration... [OK]",
+                "&gt; Resolving dependencies for neoForge loader 1.21... [OK]",
+                "&gt; Task :compileJava [1.2s]",
+                "&gt; Task :processResources [0.5s]",
+                "&gt; Task :classes [OK]",
+                "&gt; Task :jar [0.8s]",
+                "&gt; Packaging calabrimbor-core-1.21.jar... [OK]",
+                "<span style='color: #10b981; font-weight: bold;'>BUILD SUCCESSFUL</span> in 3.6s",
+                "calabrimbor@macbook: ~/workspace/modding % _"
+            ];
+
+            let index = 0;
+            function printLine() {
+                if (index < lines.length) {
+                    const line = document.createElement('div');
+                    line.style.marginTop = '4px';
+                    line.innerHTML = lines[index];
+                    logBox.appendChild(line);
+                    logBox.scrollTop = logBox.scrollHeight;
+                    index++;
+                    setTimeout(printLine, 400 + Math.random() * 500);
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = "Run Gradle Compilation Tasks >";
+                }
+            }
+            setTimeout(printLine, 300);
+        }
+
+        // Custom Post Creation & Management
+        function getCustomPosts() {
+            try {
+                const stored = localStorage.getItem('calabrimbor-custom-posts');
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveCustomPosts(posts) {
+            localStorage.setItem('calabrimbor-custom-posts', JSON.stringify(posts));
+        }
+
+        function handlePostPublish(e) {
+            e.preventDefault();
+            const title = document.getElementById('composer-title').value;
+            const category = document.getElementById('composer-category').value;
+            const summary = document.getElementById('composer-summary').value;
+            const readTime = document.getElementById('composer-read-time').value;
+            const content = document.getElementById('composer-content').value;
+
+            // Generate clean date string
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = new Date().toLocaleDateString('en-US', options);
+
+            // Generate clean URL ID
+            const postId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+            const newPost = {
+                id: postId,
+                title: title,
+                category: category,
+                summary: summary,
+                date: dateStr,
+                readTime: readTime,
+                content: content
+            };
+
+            const posts = getCustomPosts();
+            posts.unshift(newPost); // Add at beginning of list
+            saveCustomPosts(posts);
+
+            // Clear composer inputs
+            document.getElementById('composer-form').reset();
+            
+            // Reload table registry and counters
+            renderCustomPostsTable();
+            alert(`Transmission Published: "${title}" is now active in the blog roll!`);
+        }
+
+        function deletePost(id) {
+            if (confirm("Confirm removal of this article transmission?")) {
+                let posts = getCustomPosts();
+                posts = posts.filter(p => p.id !== id);
+                saveCustomPosts(posts);
+                renderCustomPostsTable();
+            }
+        }
+
+        function renderCustomPostsTable() {
+            const posts = getCustomPosts();
+            const tbody = document.getElementById('custom-posts-tbody');
+            const countLabel = document.getElementById('custom-posts-count');
+            
+            if (countLabel) countLabel.textContent = posts.length;
+            
+            tbody.innerHTML = '';
+            
+            if (posts.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--text-muted);">NO CUSTOM POSTS LOCATED IN DATABASE REGISTRY.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            posts.forEach(post => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="white-space: nowrap;">
+                        <span style="color: var(--text-muted); font-size: 0.75rem;">${post.id}</span><br>
+                        <strong>${post.date}</strong>
+                    </td>
+                    <td><strong style="color: var(--text-main);">${post.title}</strong></td>
+                    <td><span class="blog-category">${post.category}</span></td>
+                    <td style="white-space: nowrap;">${post.readTime}</td>
+                    <td style="text-align: center;">
+                        <button class="btn btn-secondary" onclick="deletePost('${post.id}')" style="font-size: 0.75rem; padding: 4px 8px; border-color: var(--accent-gold); color: var(--accent-gold);">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

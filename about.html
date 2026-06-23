@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | Calabrimbor Modding</title>
+    <title>About Me | Calabrimbor</title>
     <meta name="description" content="Get to know Callum (Calabrimbor), a 24-year-old Scottish Minecraft modder and tech tinkerer sharing his journey with Tourette's and coding.">
+    <link rel="canonical" href="https://calabrimbormodding.github.io/about.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calabrimbormodding.github.io/about.html">
+    <meta property="og:title" content="About Me | Calabrimbor">
+    <meta property="og:description" content="Get to know Callum (Calabrimbor), a 24-year-old Scottish Minecraft modder and tech tinkerer sharing his journey with Tourette's and coding.">
+    <meta property="og:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
+    <meta property="og:site_name" content="Calabrimbor">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://calabrimbormodding.github.io/about.html">
+    <meta name="twitter:title" content="About Me | Calabrimbor">
+    <meta name="twitter:description" content="Get to know Callum (Calabrimbor), a 24-year-old Scottish Minecraft modder and tech tinkerer sharing his journey with Tourette's and coding.">
+    <meta name="twitter:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- Dynamic Mesh Background Glows -->
-    <div class="bg-glow-container">
-        <div class="bg-glow-1"></div>
-        <div class="bg-glow-2"></div>
-    </div>
 
     <!-- Navigation Header -->
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
             <a href="index.html" class="nav-logo" id="nav-logo">
-                <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
-                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
-                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+                <svg class="standard-logo" width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="var(--primary)"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="var(--primary)"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="var(--accent-gold)"/>
+                </svg>
+                <svg class="awareness-logo-ribbon" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8.5 8.7 10.2 10 11.5L6 21C5.7 21.7 6.2 22 6.5 22C6.8 22 7.2 21.8 7.4 21.5L12 14.5L16.6 21.5C16.8 21.8 17.2 22 17.5 22C17.8 22 18.3 21.7 18 21L14 11.5C15.3 10.2 16.5 8.5 16.5 6.5C16.5 4 14.5 2 12 2ZM12 4C13.4 4 14.5 5.1 14.5 6.5C14.5 7.7 13.7 8.9 12.8 9.8C12.3 10.3 11.7 10.3 11.2 9.8C10.3 8.9 9.5 7.7 9.5 6.5C9.5 5.1 10.6 4 12 4Z"/>
                 </svg>
                 <span>CALABRIMBOR</span>
             </a>
@@ -31,6 +44,9 @@
                 <li><a href="projects.html" class="nav-link" id="nav-projects">Projects</a></li>
                 <li><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
                 <li><a href="about.html" class="nav-link active" id="nav-about">About Me</a></li>
+                <li><a href="tourettes-awareness.html" class="nav-link" id="nav-awareness">Awareness</a></li>
+                <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+                <li><a href="admin.html" class="nav-link" id="nav-admin">Admin</a></li>
             </ul>
         </div>
     </nav>
@@ -38,18 +54,37 @@
     <!-- Hero Header -->
     <header class="hero">
         <h1>About <span>Callum</span></h1>
-        <p class="subtitle">The Tinkerer's Narrative</p>
+        <p class="subtitle">A bit about myself</p>
     </header>
 
     <main class="container">
+        <!-- Blueprint Title Block -->
+        <div class="title-block">
+            <div class="title-block-item">
+                <span class="title-block-label">Project</span>
+                <span class="title-block-value">Calabrimbor Hub</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Designer</span>
+                <span class="title-block-value">Callum (Scotland)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Drawing No</span>
+                <span class="title-block-value">CB-04 (About)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Revision</span>
+                <span class="title-block-value">v4.0</span>
+            </div>
+        </div>
+
         <div class="about-grid">
             <!-- Sidebar Profile Card -->
             <aside class="profile-card" id="profile-card">
                 <div class="profile-avatar-container">
                     <img src="images/profile.jpg" class="profile-avatar" alt="Callum's Profile Picture">
                     <div class="profile-flag-badge" title="Scotland">
-                        <!-- Custom SVG Scottish Flag for absolute visual precision -->
-                        <svg width="32" height="32" viewBox="0 0 5 3">
+                        <svg width="26" height="26" viewBox="0 0 5 3">
                             <rect width="5" height="3" fill="#0065BF"/>
                             <path d="M0 0 L5 3 M0 3 L5 0" stroke="#fff" stroke-width="0.6"/>
                         </svg>
@@ -72,7 +107,7 @@
                         <strong>Minecraft Modding</strong>
                     </li>
                     <li>
-                        <span>Operating Setup</span>
+                        <span>Setup</span>
                         <strong>macOS</strong>
                     </li>
                 </ul>
@@ -80,10 +115,10 @@
 
             <!-- Main Biography Narrative -->
             <section class="about-content" id="about-biography">
-                <h3 class="section-title blue">Developer Biography</h3>
+                <h2 class="section-title blue">Biography</h2>
                 
                 <p class="about-paragraph">
-                    Hey, I'm <strong>Callum</strong>. I'm a 24-year-old developer living in Scotland. My path through software engineering focuses deeply on understanding how virtual environments handle complex logic, ticking pipelines, and raw execution speeds. I study Minecraft's Java runtime as an environment for performance engineering, aiming to build tools that maximize structural efficiency while keeping gameplay systems complex and engaging.
+                    Hey, I'm <strong>Callum</strong>. I'm a 24-year-old developer living in Scotland. I write mods for Minecraft, mainly targeting the Java environment using NeoForge. I like looking at how virtual environments handle automation and mechanical logic, aiming to build tools that keep gameplay engaging without dragging down performance.
                 </p>
 
                 <!-- Tourette's Syndrome & Coding Flow State Callout -->
@@ -94,31 +129,62 @@
                             <path d="M2 17l10 5 10-5"></path>
                             <path d="M2 12l10 5 10-5"></path>
                         </svg>
-                        Tourette's Syndrome & The Coding Outlet
+                        Tourette's & Coding
                     </div>
                     <p>
-                        One of the key aspects of my life is navigating <strong>Tourette's Syndrome</strong>. While it brings daily challenges, I have found that coding acts as a powerful focusing outlet. The moment I begin writing Java systems, mapping data loops, or investigating error stack traces, my brain enters a state of deep hyper-focus. The structured and absolute logic of software engineering provides a stabilizing focus where my tics quiet down, transforming a challenging condition into an engine for meticulous, detail-oriented work.
+                        Dealing with <strong>Tourette's Syndrome</strong> means managing physical and vocal tics throughout the day. It takes a lot of energy, but programming has been a game-changer for me. When I'm coding in Java or debugging scripts, my mind enters a state of absolute focus. This structured logic helps calm my tics down, acting as a quiet and steady environment where I'm completely in control of what I'm creating.
                     </p>
                 </div>
 
+                <!-- Focus Wave Oscilloscope Chart -->
+                <div class="focus-visualizer-card">
+                    <div class="visualizer-header">
+                        <span class="visualizer-title">BRAIN WAVE OSCILLOSCOPE [MODE: STANDARD]</span>
+                        <div class="visualizer-status">
+                            <span class="status-indicator-dot blinking" id="vis-status-dot"></span>
+                            <span id="vis-status-text" style="color: var(--accent-gold); transition: color 0.3s ease;">TICS ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="visualizer-canvas-wrapper">
+                        <svg id="oscilloscope-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
+                            <g class="svg-grid"></g>
+                            <path id="tic-wave" class="wave-path" d=""></path>
+                            <path id="focus-wave" class="wave-path" d=""></path>
+                        </svg>
+                    </div>
+                    <div class="visualizer-controls">
+                        <div class="vis-stat">
+                            <span>Tics Frequency</span>
+                            <strong id="stat-tics-val" style="transition: color 0.3s ease;">HIGH (8.4/min)</strong>
+                        </div>
+                        <div class="vis-stat">
+                            <span>Focus Stability</span>
+                            <strong id="stat-focus-val" style="transition: color 0.3s ease;">LOW (12%)</strong>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="btn-toggle-focus" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">Engage Java Flow State</button>
+                        </div>
+                    </div>
+                </div>
+
                 <p class="about-paragraph">
-                    My deep love for Minecraft is what drives me to write mods. I don't want to just create random features; I want my passion for the game to show in the quality, structure, and execution of my work. I treat mod development not as a casual add-on, but as a discipline where code quality directly shapes the player's experience. This drives my interest in modern architectures like NeoForge, aiming to deliver mods that run seamlessly even in high-load setups.
+                    I have a deep love for Minecraft, and my goal is to make sure my passion for the game shows in my mods. I want to build things that feel cohesive and run smoothly. For me, mod development is about creating reliable, high-quality additions to the game that add fun new elements while maintaining good performance.
                 </p>
 
-                <h3 class="section-title purple">System Tinkering & Technical Toolkit</h3>
+                <h2 class="section-title purple">Tech Tinkering</h2>
                 <p class="about-paragraph">
-                    When I'm not debugging Forge registries or writing clean tick-rate optimizations, I'm almost certainly tinkering with other tech-oriented hobbies. I'm driven by a curiosity to dissect systems, explore alternative environments, and optimize hardware configs.
+                    When I'm not modding, I'm usually tinkering with other tech projects. I like configuring local setups, writing scripts, and playing around with system customization.
                 </p>
 
                 <!-- Tinkering Columns -->
                 <div class="tinker-grid">
                     <div class="tinker-card">
                         <h4>System Customization</h4>
-                        <p>I enjoy experimenting with configuration scripts, exploring command-line tools, tuning operating system behaviors, and tweaking Linux and shell setups to streamline development tasks.</p>
+                        <p>I enjoy writing command-line configurations, customizing macOS shell terminals, and tweaking local Linux setups to streamline my dev workflow.</p>
                     </div>
                     <div class="tinker-card">
                         <h4>Java Workflows</h4>
-                        <p>I focus my engineering exclusively on Java, using automation scripts to manage git tasks, parse files, and optimize runtime performance pipelines.</p>
+                        <p>I focus my coding exclusively on Java, using simple scripts to automate git tasks, parse mod assets, and test performance loops.</p>
                     </div>
                 </div>
             </section>
@@ -127,8 +193,9 @@
 
     <!-- Footer -->
     <footer>
-        &copy; 2026 Calabrimbor Modding • Built with Passion & Code
+        &copy; 2026 Calabrimbor • Built with Passion & Code
     </footer>
 
+    <script src="js/main.js"></script>
 </body>
 </html>

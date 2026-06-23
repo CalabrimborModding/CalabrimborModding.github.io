@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Tinkerer's Journal | Calabrimbor Modding</title>
+    <title>Blog | Calabrimbor</title>
     <meta name="description" content="Read Callum's developer journal covering Minecraft mod development, macOS setups, Java performance engineering, and system customization.">
+    <link rel="canonical" href="https://calabrimbormodding.github.io/blog.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calabrimbormodding.github.io/blog.html">
+    <meta property="og:title" content="Blog | Calabrimbor">
+    <meta property="og:description" content="Read Callum's developer journal covering Minecraft mod development, macOS setups, Java performance engineering, and system customization.">
+    <meta property="og:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
+    <meta property="og:site_name" content="Calabrimbor">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://calabrimbormodding.github.io/blog.html">
+    <meta name="twitter:title" content="Blog | Calabrimbor">
+    <meta name="twitter:description" content="Read Callum's developer journal covering Minecraft mod development, macOS setups, Java performance engineering, and system customization.">
+    <meta name="twitter:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- Dynamic Mesh Background Glows -->
-    <div class="bg-glow-container">
-        <div class="bg-glow-1"></div>
-        <div class="bg-glow-2"></div>
-    </div>
 
     <!-- Navigation Header -->
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
             <a href="index.html" class="nav-logo" id="nav-logo">
-                <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
-                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
-                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+                <svg class="standard-logo" width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="var(--primary)"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="var(--primary)"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="var(--accent-gold)"/>
+                </svg>
+                <svg class="awareness-logo-ribbon" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8.5 8.7 10.2 10 11.5L6 21C5.7 21.7 6.2 22 6.5 22C6.8 22 7.2 21.8 7.4 21.5L12 14.5L16.6 21.5C16.8 21.8 17.2 22 17.5 22C17.8 22 18.3 21.7 18 21L14 11.5C15.3 10.2 16.5 8.5 16.5 6.5C16.5 4 14.5 2 12 2ZM12 4C13.4 4 14.5 5.1 14.5 6.5C14.5 7.7 13.7 8.9 12.8 9.8C12.3 10.3 11.7 10.3 11.2 9.8C10.3 8.9 9.5 7.7 9.5 6.5C9.5 5.1 10.6 4 12 4Z"/>
                 </svg>
                 <span>CALABRIMBOR</span>
             </a>
@@ -31,31 +44,54 @@
                 <li><a href="projects.html" class="nav-link" id="nav-projects">Projects</a></li>
                 <li><a href="blog.html" class="nav-link active" id="nav-blog">Blog</a></li>
                 <li><a href="about.html" class="nav-link" id="nav-about">About Me</a></li>
+                <li><a href="tourettes-awareness.html" class="nav-link" id="nav-awareness">Awareness</a></li>
+                <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+                <li><a href="admin.html" class="nav-link" id="nav-admin">Admin</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Header -->
     <header class="hero">
-        <h1>Tinkerer's <span>Journal</span></h1>
-        <p class="subtitle">Coding Adventures & Mod Updates</p>
+        <h1>Developer Blog</h1>
+        <p class="subtitle">Journals & Code Adventures</p>
         <p class="lead-text">
-            Documenting my thoughts, lessons learned, and system configuration journeys.
+            Sharing notes on my modding progress, tech scripts, and what I learn along the way.
         </p>
     </header>
 
     <main class="container">
+        <!-- Blueprint Title Block -->
+        <div class="title-block">
+            <div class="title-block-item">
+                <span class="title-block-label">Project</span>
+                <span class="title-block-value">Calabrimbor Hub</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Designer</span>
+                <span class="title-block-value">Callum (Scotland)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Drawing No</span>
+                <span class="title-block-value">CB-03 (Blog)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Revision</span>
+                <span class="title-block-value">v4.0</span>
+            </div>
+        </div>
+
         <!-- Interactive Controls (Search & Filter) -->
         <div class="controls-container" id="controls">
             <!-- Search Bar Wrapper -->
             <div class="search-wrapper">
                 <div class="search-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </div>
-                <input type="text" id="search-bar" class="search-input" placeholder="Search posts, summaries, dates..." oninput="updateFilters()">
+                <input type="text" id="search-bar" class="search-input" placeholder="Search posts..." oninput="updateFilters()">
             </div>
 
             <!-- Filter Buttons -->
@@ -72,40 +108,50 @@
 
         <!-- No Results Visual Element -->
         <div class="no-results" id="no-results-state">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 15px auto;">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="M16 16l6 6"></path>
-                <path d="M8 11h6"></path>
-            </svg>
             <h3>No Matching Articles Found</h3>
             <p>Try refining your search keyword or selecting a different category filter.</p>
         </div>
     </main>
 
-    <!-- Glassmorphic Modal Overlay for Reading Posts -->
+    <!-- Terminal Modal Overlay for Reading Posts -->
     <div class="modal-overlay" id="blog-modal" onclick="closeModal(event)">
         <div class="modal-window" onclick="event.stopPropagation()">
-            <button class="modal-close-btn" onclick="closeModal(event)" aria-label="Close modal">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <div class="modal-post-meta">
-                <span class="blog-category" id="modal-category">Modding</span>
-                <span class="blog-date" id="modal-date">June 20, 2026</span>
-                <span class="blog-read-time" id="modal-read-time">5 min read</span>
+            <!-- Terminal Title Bar -->
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="terminal-btn-dot close" onclick="closeModal(event)"></span>
+                    <span class="terminal-btn-dot minimize"></span>
+                    <span class="terminal-btn-dot expand"></span>
+                </div>
+                <div class="terminal-title">calabrimbor@macos:~/journal</div>
+                <button class="terminal-close-btn" onclick="closeModal(event)" aria-label="Close terminal">
+                    &times;
+                </button>
             </div>
-            <h2 class="modal-post-title" id="modal-title">Setting Up NeoForge on macOS</h2>
-            <article class="modal-post-body" id="modal-body">
-                <!-- Populated dynamically via JS -->
-            </article>
+            <!-- Terminal Screen Body -->
+            <div class="terminal-body">
+                <div class="terminal-prompt">cat <span>journal.txt</span></div>
+                
+                <div class="modal-post-meta">
+                    <span class="blog-category" id="modal-category">Modding</span>
+                    <span class="blog-date" id="modal-date">June 20, 2026</span>
+                    <span class="blog-read-time" id="modal-read-time">5 min read</span>
+                </div>
+                <h2 class="modal-post-title" id="modal-title">Setting Up NeoForge on macOS</h2>
+                <article class="modal-post-body" id="modal-body">
+                    <!-- Populated dynamically via JS -->
+                </article>
+                
+                <div class="terminal-prompt-footer">
+                    <span class="terminal-cursor">█</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        &copy; 2026 Calabrimbor Modding • Built with Passion & Code
+        &copy; 2026 Calabrimbor • Built with Passion & Code
     </footer>
 
     <!-- Load Blog Post Database -->
@@ -114,6 +160,20 @@
     <!-- Rendering, Search, and Filtering logic -->
     <script>
         let currentCategory = 'all';
+
+        function getMergedBlogPosts() {
+            const staticPosts = BLOG_POSTS || [];
+            let customPosts = [];
+            try {
+                const stored = localStorage.getItem('calabrimbor-custom-posts');
+                if (stored) {
+                    customPosts = JSON.parse(stored);
+                }
+            } catch (e) {
+                console.error('Error loading custom posts:', e);
+            }
+            return [...customPosts, ...staticPosts];
+        }
 
         // Render posts initially
         document.addEventListener('DOMContentLoaded', () => {
@@ -125,7 +185,8 @@
             const grid = document.getElementById('blog-grid');
             grid.innerHTML = '';
 
-            BLOG_POSTS.forEach(post => {
+            const allPosts = getMergedBlogPosts();
+            allPosts.forEach(post => {
                 const card = document.createElement('div');
                 card.className = 'card blog-card';
                 card.setAttribute('data-category', post.category.toLowerCase());
@@ -141,7 +202,7 @@
                         <p>${post.summary}</p>
                     </div>
                     <div class="btn-group" style="margin-top: 15px;">
-                        <button class="btn btn-secondary" onclick="openPost('${post.id}')">Read Article</button>
+                        <button class="btn" onclick="openPost('${post.id}')">Read Article</button>
                         <span class="blog-read-time" style="margin-left: auto; align-self: center;">${post.readTime}</span>
                     </div>
                 `;
@@ -176,10 +237,10 @@
                 if (categoryMatch && searchMatch) {
                     card.style.display = 'flex';
                     card.style.opacity = '0';
-                    card.style.transform = 'translateY(8px)';
+                    card.style.transform = 'translateY(5px)';
                     
                     requestAnimationFrame(() => {
-                        card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                        card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     });
@@ -193,11 +254,6 @@
             const noResults = document.getElementById('no-results-state');
             if (visibleCount === 0) {
                 noResults.style.display = 'block';
-                noResults.style.opacity = '0';
-                requestAnimationFrame(() => {
-                    noResults.style.transition = 'opacity 0.2s ease';
-                    noResults.style.opacity = '1';
-                });
             } else {
                 noResults.style.display = 'none';
             }
@@ -205,7 +261,8 @@
 
         // Modal Functionality
         function openPost(postId) {
-            const post = BLOG_POSTS.find(p => p.id === postId);
+            const allPosts = getMergedBlogPosts();
+            const post = allPosts.find(p => p.id === postId);
             if (!post) return;
 
             document.getElementById('modal-category').textContent = post.category;
@@ -232,5 +289,6 @@
             }
         });
     </script>
+    <script src="js/main.js"></script>
 </body>
 </html>

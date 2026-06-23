@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calabrimbor Modding | Minecraft Java Development</title>
-    <meta name="description" content="Welcome to the Minecraft Java modding development hub of Callum (Calabrimbor). Explore NeoForge concepts, performance-driven mods, and tech tinkering.">
+    <title>Calabrimbor | Minecraft Modding & Tech Tinkering</title>
+    <meta name="description" content="Welcome to the Minecraft Java modding development hub of Callum (Calabrimbor). Explore NeoForge mods, developer journals, and tech tinkering.">
+    <link rel="canonical" href="https://calabrimbormodding.github.io/index.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calabrimbormodding.github.io/index.html">
+    <meta property="og:title" content="Calabrimbor | Minecraft Modding & Tech Tinkering">
+    <meta property="og:description" content="Welcome to the Minecraft Java modding development hub of Callum (Calabrimbor). Explore NeoForge mods, developer journals, and tech tinkering.">
+    <meta property="og:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
+    <meta property="og:site_name" content="Calabrimbor">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://calabrimbormodding.github.io/index.html">
+    <meta name="twitter:title" content="Calabrimbor | Minecraft Modding & Tech Tinkering">
+    <meta name="twitter:description" content="Welcome to the Minecraft Java modding development hub of Callum (Calabrimbor). Explore NeoForge mods, developer journals, and tech tinkering.">
+    <meta name="twitter:image" content="https://calabrimbormodding.github.io/images/profile.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- Dynamic Mesh Background Glows -->
-    <div class="bg-glow-container">
-        <div class="bg-glow-1"></div>
-        <div class="bg-glow-2"></div>
-    </div>
 
     <!-- Navigation Header -->
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
             <a href="index.html" class="nav-logo" id="nav-logo">
-                <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
-                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
-                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+                <svg class="standard-logo" width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="var(--primary)"/>
+                    <path d="M160 330L352 330L372 370L140 370H160Z" fill="var(--primary)"/>
+                    <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="var(--accent-gold)"/>
+                </svg>
+                <svg class="awareness-logo-ribbon" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+                    <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8.5 8.7 10.2 10 11.5L6 21C5.7 21.7 6.2 22 6.5 22C6.8 22 7.2 21.8 7.4 21.5L12 14.5L16.6 21.5C16.8 21.8 17.2 22 17.5 22C17.8 22 18.3 21.7 18 21L14 11.5C15.3 10.2 16.5 8.5 16.5 6.5C16.5 4 14.5 2 12 2ZM12 4C13.4 4 14.5 5.1 14.5 6.5C14.5 7.7 13.7 8.9 12.8 9.8C12.3 10.3 11.7 10.3 11.2 9.8C10.3 8.9 9.5 7.7 9.5 6.5C9.5 5.1 10.6 4 12 4Z"/>
                 </svg>
                 <span>CALABRIMBOR</span>
             </a>
@@ -31,6 +44,9 @@
                 <li><a href="projects.html" class="nav-link" id="nav-projects">Projects</a></li>
                 <li><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
                 <li><a href="about.html" class="nav-link" id="nav-about">About Me</a></li>
+                <li><a href="tourettes-awareness.html" class="nav-link" id="nav-awareness">Awareness</a></li>
+                <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+                <li><a href="admin.html" class="nav-link" id="nav-admin">Admin</a></li>
             </ul>
         </div>
     </nav>
@@ -38,22 +54,45 @@
     <!-- Main Content Hero -->
     <header class="hero">
         <div class="logo-container">
-            <svg width="80" height="80" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="#00d2ff"/>
-                <path d="M160 330L352 330L372 370L140 370H160Z" fill="#00d2ff"/>
-                <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="#ffb300"/>
+            <svg class="standard-logo" width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M140 200L372 200L352 240L290 240L290 280L320 310L320 330L192 330L192 310L222 280L222 240L160 240L140 200Z" fill="var(--primary)"/>
+                <path d="M160 330L352 330L372 370L140 370H160Z" fill="var(--primary)"/>
+                <path d="M256 80L262 130L312 136L262 142L256 192L250 142L200 136L250 130L256 80Z" fill="var(--accent-gold)"/>
+            </svg>
+            <svg class="awareness-logo-ribbon" width="64" height="64" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8.5 8.7 10.2 10 11.5L6 21C5.7 21.7 6.2 22 6.5 22C6.8 22 7.2 21.8 7.4 21.5L12 14.5L16.6 21.5C16.8 21.8 17.2 22 17.5 22C17.8 22 18.3 21.7 18 21L14 11.5C15.3 10.2 16.5 8.5 16.5 6.5C16.5 4 14.5 2 12 2ZM12 4C13.4 4 14.5 5.1 14.5 6.5C14.5 7.7 13.7 8.9 12.8 9.8C12.3 10.3 11.7 10.3 11.2 9.8C10.3 8.9 9.5 7.7 9.5 6.5C9.5 5.1 10.6 4 12 4Z"/>
             </svg>
         </div>
-        <h1>Calabrimbor <span>Modding</span></h1>
-        <p class="subtitle">Forging Minecraft Java Experiences</p>
+        <h1>Calabrimbor</h1>
+        <p class="subtitle">Minecraft Modding & Tech Tinkering</p>
         <p class="lead-text">
-            Exploring mechanical systems, automation loops, and high-efficiency algorithms in Java. Driven by an open-source, community-first engineering mindset.
+            I'm Callum. I build open-source mods for Minecraft in Java. This is where I track my active projects, write updates, and document my scripting experiments.
         </p>
     </header>
 
     <main class="container">
+        <!-- Blueprint Title Block -->
+        <div class="title-block">
+            <div class="title-block-item">
+                <span class="title-block-label">Project</span>
+                <span class="title-block-value">Calabrimbor Hub</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Designer</span>
+                <span class="title-block-value">Callum (Scotland)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Drawing No</span>
+                <span class="title-block-value">CB-01 (Index)</span>
+            </div>
+            <div class="title-block-item">
+                <span class="title-block-label">Revision</span>
+                <span class="title-block-value">v4.0</span>
+            </div>
+        </div>
+
         <p class="hub-intro">
-            Welcome to my development workspace. This site is split into separate hubs detailing my active Minecraft modding endeavors and my personal engineering background. Select an area below to dive in.
+            This space is split into a few sections depending on what you're looking for. Check out active mod projects, read my developer journal, or learn more about me.
         </p>
 
         <!-- Hub Showcase Split -->
@@ -63,20 +102,19 @@
                 <div>
                     <div class="hub-card-title">
                         <div class="hub-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="16 18 22 12 16 6"></polyline>
                                 <polyline points="8 6 2 12 8 18"></polyline>
                             </svg>
                         </div>
-                        <h3>Mods & Projects</h3>
+                        <h3>Minecraft Mods</h3>
                     </div>
                     <p>
-                        Take a look at the mods I'm building and planning. I'm focusing on creating clean, performance-friendly NeoForge mods that add cool automation systems, kinetic machinery, and run smoothly in large modpacks.
+                        A list of active mods and concepts I'm planning. I focus on writing clean, performant NeoForge code that adds cool automation elements and runs smoothly in heavy modpacks.
                     </p>
                     <ul class="specs-list">
-                        <li>Active Target: NeoForge 1.21.1+</li>
-                        <li>Themes: Kinetic machinery, automation, and compatibility</li>
-                        <li>Open-Source: Free and collaborative code</li>
+                        <li>Target Loader: NeoForge / Java 21</li>
+                        <li>Themes: Kinetic machinery, automation, compatibility</li>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -89,20 +127,19 @@
                 <div>
                     <div class="hub-card-title">
                         <div class="hub-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                         </div>
-                        <h3>About Callum</h3>
+                        <h3>About Me</h3>
                     </div>
                     <p>
-                        I'm a 24-year-old developer based in Scotland. When I'm not tracing Java crash logs or optimizing Minecraft chunk tickers, I explore other areas of tech, study system designs, and follow football. Get a deeper look at my story and background.
+                        I'm 24 and based in Scotland. Programming helps me manage my Tourette's syndrome by providing a hyper-focused space where my tics quiet down. When I'm offline, I tinker with operating systems, configurations, and shell setups.
                     </p>
                     <ul class="specs-list purple">
-                        <li>Location: Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</li>
-                        <li>Background: 24 Years Old with Tourette's</li>
-                        <li>Interests: Tech tinkering & hardware setups</li>
+                        <li>Environment: macOS & Linux</li>
+                        <li>Background: 24yo with Tourette's</li>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -113,22 +150,23 @@
 
         <!-- Tech Ribbon Section -->
         <div class="tech-ribbon-section">
-            <h3 class="section-title blue">Tech Stack & Tinkering Toolkit</h3>
+            <h2 class="section-title blue">Tech Stack & Environments</h2>
             <div class="tech-tags">
                 <span class="tech-badge">Java</span>
                 <span class="tech-badge">NeoForge</span>
-                <span class="tech-badge">Git & Version Control</span>
-                <span class="tech-badge">Apple Silicon Environment</span>
-                <span class="tech-badge">Automation</span>
+                <span class="tech-badge">Git & GitHub</span>
+                <span class="tech-badge">macOS (Apple Silicon)</span>
                 <span class="tech-badge">Linux</span>
+                <span class="tech-badge">Automation Scripts</span>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer>
-        &copy; 2026 Calabrimbor Modding • Built with Passion & Code
+        &copy; 2026 Calabrimbor • Built with Passion & Code
     </footer>
 
+    <script src="js/main.js"></script>
 </body>
 </html>
