@@ -116,13 +116,59 @@
             </div>
         </div>
 
-        <!-- Compilation Console Card -->
-        <h2 class="section-title blue">Java / NeoForge Compiler Simulator</h2>
+        <!-- Gemini API Diagnostics & Testing Hub -->
+        <h2 class="section-title blue">Gemini API Diagnostics & Testing Console</h2>
         <div class="card" style="margin-bottom: 40px; padding: 25px;">
-            <p style="margin-bottom: 15px;">Run a simulation of compiling Minecraft Java resources using NeoForge loader gradle tasks.</p>
-            <button class="btn btn-secondary" onclick="simulateCompilation()" id="btn-run-compile" style="font-family: var(--font-mono); font-size: 0.85rem; padding: 8px 16px; margin-bottom: 20px;">Run Gradle Compilation Tasks &gt;</button>
-            <div style="background: var(--bg-terminal); color: var(--primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 15px; font-family: var(--font-mono); font-size: 0.8rem; min-height: 120px; line-height: 1.6; overflow-y: auto;" id="compile-console-log">
-                <div>calabrimbor@macbook: ~/workspace/modding % _</div>
+            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.9rem;">Inspect, configure, and execute real-time test requests against the Google Gemini API. Saved credentials persist globally to the chatbot widget settings.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 20px;">
+                <!-- Configuration panel -->
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label class="contact-label" style="font-family: var(--font-mono); font-size: 0.8rem;">[API_KEY_STATE]</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="password" id="diag-api-key" class="contact-input" placeholder="Configure Gemini API key..." style="flex: 1; font-family: var(--font-mono); font-size: 0.85rem;">
+                            <button class="btn btn-secondary" id="btn-toggle-key-visibility" onclick="toggleKeyVisibility()" style="padding: 0 12px; font-size: 0.8rem;">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label class="contact-label" style="font-family: var(--font-mono); font-size: 0.8rem;">[ACTIVE_MODEL]</label>
+                        <div class="theme-select-wrapper" style="width: 100%;">
+                            <select id="diag-model-select" class="contact-select" onchange="localStorage.setItem('calabrimbor-gemini-model', this.value)" style="font-family: var(--font-mono); font-size: 0.85rem;">
+                                <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                                <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                                <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;">
+                        <button class="btn btn-primary" onclick="saveDiagSettings()" id="btn-save-diag" style="font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 16px;">Save & Validate Key</button>
+                        <button class="btn btn-secondary" onclick="clearDiagSettings()" id="btn-clear-diag" style="font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 16px;">Clear Key</button>
+                    </div>
+                </div>
+
+                <!-- Test Request Settings -->
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label class="contact-label" style="font-family: var(--font-mono); font-size: 0.8rem;">[SYSTEM_INSTRUCTIONS]</label>
+                        <textarea id="diag-system-prompt" class="contact-textarea" rows="2" style="font-size: 0.75rem; line-height: 1.4; resize: vertical;" placeholder="Optional system instructions override..."></textarea>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label class="contact-label" style="font-family: var(--font-mono); font-size: 0.8rem;">[DIAGNOSTIC_QUERY]</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="diag-query-input" class="contact-input" placeholder="Type diagnostic test prompt..." value="Hello! Run a quick diagnostics check on our connection." style="flex: 1; font-family: var(--font-mono); font-size: 0.85rem;">
+                            <button class="btn btn-primary" onclick="runDiagnostics()" id="btn-run-diagnostics" style="font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 16px;">Run Diagnostic &gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal output log -->
+            <div style="background: var(--bg-terminal); color: var(--primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 15px; font-family: var(--font-mono); font-size: 0.8rem; min-height: 180px; max-height: 350px; line-height: 1.6; overflow-y: auto;" id="compile-console-log">
+                <div>calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % _</div>
             </div>
         </div>
 
@@ -201,7 +247,6 @@
     </footer>
 
     <script>
-        // Authentication Guard
         document.addEventListener('DOMContentLoaded', () => {
             const authState = sessionStorage.getItem('calabrimbor-admin-auth');
             if (authState === 'true') {
@@ -215,6 +260,19 @@
 
             // Render custom articles registry table
             renderCustomPostsTable();
+
+            // Load Gemini Diagnostics Configurations
+            const savedKey = localStorage.getItem('calabrimbor-gemini-key') || '';
+            const savedModel = localStorage.getItem('calabrimbor-gemini-model') || 'gemini-1.5-flash';
+            document.getElementById('diag-api-key').value = savedKey;
+            
+            // Set default system prompt
+            const defaultSysPrompt = `You are "Calabrimbor AI", a virtual assistant avatar for Callum's developer portfolio. Callum is a 24-year-old developer from Scotland who builds Minecraft Java mods using NeoForge 1.21. He has Tourette's Syndrome and writes code as a way to calm his motor cortex (tics suppression). Be helpful, smart, technical, and match the retro blueprint/terminal aesthetic of the website.`;
+            document.getElementById('diag-system-prompt').value = defaultSysPrompt;
+
+            if (savedKey) {
+                populateDiagModels(savedKey, savedModel);
+            }
         });
 
         function handleAuthSubmit(e) {
@@ -257,43 +315,241 @@
             }
         }
 
-        // Simulating Compilation
-        function simulateCompilation() {
-            const logBox = document.getElementById('compile-console-log');
-            const btn = document.getElementById('btn-run-compile');
-            btn.disabled = true;
-            btn.textContent = "Compiling resources...";
-            
-            logBox.innerHTML = '<div>calabrimbor@macbook: ~/workspace/modding % ./gradlew build</div>';
-
-            const lines = [
-                "&gt; Preparing build configuration... [OK]",
-                "&gt; Resolving dependencies for neoForge loader 1.21... [OK]",
-                "&gt; Task :compileJava [1.2s]",
-                "&gt; Task :processResources [0.5s]",
-                "&gt; Task :classes [OK]",
-                "&gt; Task :jar [0.8s]",
-                "&gt; Packaging calabrimbor-core-1.21.jar... [OK]",
-                "<span style='color: #10b981; font-weight: bold;'>BUILD SUCCESSFUL</span> in 3.6s",
-                "calabrimbor@macbook: ~/workspace/modding % _"
-            ];
-
-            let index = 0;
-            function printLine() {
-                if (index < lines.length) {
-                    const line = document.createElement('div');
-                    line.style.marginTop = '4px';
-                    line.innerHTML = lines[index];
-                    logBox.appendChild(line);
-                    logBox.scrollTop = logBox.scrollHeight;
-                    index++;
-                    setTimeout(printLine, 400 + Math.random() * 500);
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = "Run Gradle Compilation Tasks >";
+        // Gemini API Diagnostics Functions
+        async function populateDiagModels(key, selectedModel) {
+            const modelSelect = document.getElementById('diag-model-select');
+            if (!modelSelect || !key) return;
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models?key=${key}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.models && data.models.length > 0) {
+                        const validModels = data.models.filter(m => 
+                            m.supportedGenerationMethods && 
+                            m.supportedGenerationMethods.includes('generateContent')
+                        );
+                        if (validModels.length > 0) {
+                            modelSelect.innerHTML = '';
+                            validModels.forEach(m => {
+                                const name = m.name.replace('models/', '');
+                                const option = document.createElement('option');
+                                option.value = name;
+                                option.textContent = name;
+                                modelSelect.appendChild(option);
+                            });
+                            if (selectedModel) {
+                                modelSelect.value = selectedModel;
+                            }
+                        }
+                    }
                 }
+            } catch (e) {
+                console.error('Error listing models in diagnostics:', e);
             }
-            setTimeout(printLine, 300);
+        }
+
+        function toggleKeyVisibility() {
+            const keyInput = document.getElementById('diag-api-key');
+            const toggleBtn = document.getElementById('btn-toggle-key-visibility');
+            if (keyInput.type === 'password') {
+                keyInput.type = 'text';
+                toggleBtn.textContent = '🔒';
+            } else {
+                keyInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        async function saveDiagSettings() {
+            const keyInput = document.getElementById('diag-api-key');
+            const saveBtn = document.getElementById('btn-save-diag');
+            const key = keyInput.value.trim();
+            const logBox = document.getElementById('compile-console-log');
+            
+            if (!key) {
+                alert('Please enter a valid Gemini API key.');
+                return;
+            }
+            
+            saveBtn.disabled = true;
+            saveBtn.textContent = "Validating...";
+            
+            logBox.innerHTML = `<div>calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % ./gemini-diagnose --validate-key</div>`;
+            appendDiagConsoleLog("<span style='color: var(--text-muted);'>[INFO] Validating key with model discovery...</span>");
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models?key=${key}`);
+                if (!response.ok) {
+                    let errMsg = response.statusText || "";
+                    try {
+                        const errData = await response.json();
+                        if (errData.error && errData.error.message) {
+                            errMsg = errData.error.message;
+                        }
+                    } catch (e) {}
+                    throw new Error(`API Verification Failed: ${response.status} - ${errMsg}`);
+                }
+                
+                const data = await response.json();
+                if (data.models && data.models.length > 0) {
+                    const validModels = data.models.filter(m => 
+                        m.supportedGenerationMethods && 
+                        m.supportedGenerationMethods.includes('generateContent')
+                    );
+                    
+                    if (validModels.length > 0) {
+                        localStorage.setItem('calabrimbor-gemini-key', key);
+                        
+                        // Populate select
+                        const modelSelect = document.getElementById('diag-model-select');
+                        modelSelect.innerHTML = '';
+                        validModels.forEach(m => {
+                            const name = m.name.replace('models/', '');
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            modelSelect.appendChild(option);
+                        });
+                        
+                        const selectedModel = validModels[0].name.replace('models/', '');
+                        localStorage.setItem('calabrimbor-gemini-model', selectedModel);
+                        modelSelect.value = selectedModel;
+                        
+                        appendDiagConsoleLog(`<span style='color: #10b981; font-weight: bold;'>VALIDATION SUCCESSFUL:</span> Key verified. Found ${validModels.length} models.`);
+                        appendDiagConsoleLog(`[INFO] Active model initialized to: <span style='color: var(--accent-gold);'>${selectedModel}</span>`);
+                        alert('API Key validated and saved successfully!');
+                    } else {
+                        throw new Error('No text generation models found for this key.');
+                    }
+                } else {
+                    throw new Error('Empty model list received.');
+                }
+            } catch (err) {
+                appendDiagConsoleLog(`<span style='color: var(--accent-gold); font-weight: bold;'>VALIDATION FAILED:</span> ${err.message}`);
+                alert(`Validation failed: ${err.message}`);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = "Save & Validate Key";
+                appendDiagConsoleLog("calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % _");
+            }
+        }
+
+        function clearDiagSettings() {
+            if (confirm('Are you sure you want to clear the stored Gemini API Key?')) {
+                localStorage.removeItem('calabrimbor-gemini-key');
+                localStorage.removeItem('calabrimbor-gemini-model');
+                document.getElementById('diag-api-key').value = '';
+                const modelSelect = document.getElementById('diag-model-select');
+                modelSelect.innerHTML = `
+                    <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                    <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                    <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                `;
+                modelSelect.value = 'gemini-1.5-flash';
+                
+                const logBox = document.getElementById('compile-console-log');
+                logBox.innerHTML = `<div>calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % ./gemini-diagnose --clear</div>`;
+                appendDiagConsoleLog("<span style='color: var(--text-muted);'>[INFO] Stored API configuration cleared successfully. Fallback mode enabled.</span>");
+                appendDiagConsoleLog("calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % _");
+                alert('API Configuration cleared.');
+            }
+        }
+
+        async function runDiagnostics() {
+            const key = document.getElementById('diag-api-key').value.trim();
+            const modelSelect = document.getElementById('diag-model-select');
+            const model = modelSelect.value || 'gemini-1.5-flash';
+            const userQuery = document.getElementById('diag-query-input').value.trim();
+            const systemPrompt = document.getElementById('diag-system-prompt').value.trim();
+            const diagBtn = document.getElementById('btn-run-diagnostics');
+            const logBox = document.getElementById('compile-console-log');
+            
+            if (!key) {
+                logBox.innerHTML = `<div>calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % ./gemini-diagnose</div>`;
+                appendDiagConsoleLog("<span style='color: var(--accent-gold); font-weight: bold;'>[ERROR] API key is not configured. Cannot run live diagnostics check.</span>");
+                appendDiagConsoleLog("calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % _");
+                alert('Please enter and save a valid Gemini API Key first.');
+                return;
+            }
+
+            if (!userQuery) {
+                alert('Please enter a test prompt query.');
+                return;
+            }
+
+            diagBtn.disabled = true;
+            diagBtn.textContent = "Diagnosing...";
+            
+            logBox.innerHTML = `<div>calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % ./gemini-diagnose --model "${model}"</div>`;
+            appendDiagConsoleLog(`[INFO] Connecting to Google Generative Language Gateway...`);
+            appendDiagConsoleLog(`[INFO] Target model: <span style="color: var(--primary);">${model}</span>`);
+            
+            // Format instructions like queryGemini prepends
+            const prependedText = systemPrompt ? `[System Instructions: ${systemPrompt}]\n\nUser Question: ${userQuery}` : userQuery;
+            
+            const payloadSample = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prependedText }]
+                }]
+            };
+            
+            appendDiagConsoleLog(`[PAYLOAD] Sending structure: ${JSON.stringify(payloadSample)}`);
+            appendDiagConsoleLog(`[POST] Requesting: https://generativelanguage.googleapis.com/v1/models/${model}:generateContent`);
+            
+            const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${key}`;
+            const startTime = performance.now();
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payloadSample)
+                });
+                
+                const latency = (performance.now() - startTime).toFixed(0);
+                
+                if (!response.ok) {
+                    let errMsg = response.statusText || "";
+                    try {
+                        const errData = await response.json();
+                        if (errData.error && errData.error.message) {
+                            errMsg = errData.error.message;
+                        }
+                    } catch (e) {}
+                    throw new Error(`HTTP ${response.status} - ${errMsg}`);
+                }
+                
+                const data = await response.json();
+                appendDiagConsoleLog(`[OK] Server response status: <span style="color: #10b981; font-weight: bold;">200 OK</span>`);
+                appendDiagConsoleLog(`[TIME] Round-trip latency: <span style="color: var(--primary);">${latency}ms</span>`);
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+                    const text = data.candidates[0].content.parts[0].text;
+                    appendDiagConsoleLog(`[SIZE] Response size: ${text.length} characters.`);
+                    appendDiagConsoleLog(`[OUTPUT] Gemini response:\n<span style="color: #fff; font-family: var(--font-sans); display: block; padding: 10px; margin-top: 5px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--primary); white-space: pre-wrap; word-break: break-all;">${text}</span>`);
+                } else {
+                    throw new Error("Invalid response format");
+                }
+            } catch (err) {
+                appendDiagConsoleLog(`<span style='color: var(--accent-gold); font-weight: bold;'>[FAIL] Diagnostics failed:</span> ${err.message}`);
+            } finally {
+                diagBtn.disabled = false;
+                diagBtn.textContent = "Run Diagnostic >";
+                appendDiagConsoleLog("calabrimbor@macbook: ~/workspace/admin/gemini-diagnostics % _");
+            }
+        }
+
+        function appendDiagConsoleLog(lineText) {
+            const logBox = document.getElementById('compile-console-log');
+            if (!logBox) return;
+            const line = document.createElement('div');
+            line.style.marginTop = '4px';
+            line.innerHTML = lineText;
+            logBox.appendChild(line);
+            logBox.scrollTop = logBox.scrollHeight;
         }
 
         // Custom Post Creation & Management
